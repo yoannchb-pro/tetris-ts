@@ -32,8 +32,11 @@ h1 {
 
 fieldset {
   padding: 0.5rem;
-  color: #212129;
   border-color: #212129;
+}
+
+legend {
+  color: #212129;
 }
 
 .actions {
