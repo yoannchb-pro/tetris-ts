@@ -1,0 +1,49 @@
+import GameHandler from "../GameHandler";
+import Board from "./Board";
+
+type Keys = {
+  RIGHT: string;
+  DOWN: string;
+  LEFT: string;
+  ROTATE: string;
+};
+
+class KeyHandler {
+  constructor(private gameHandler: GameHandler, private keys: Keys) {
+    this.initListener();
+  }
+
+  initListener() {
+    const board = this.gameHandler.getBoard();
+
+    document.addEventListener("keydown", (event) => {
+      const key = event.key;
+      const cmd = Object.entries(this.keys).find(
+        (arr) => arr[1].toLocaleLowerCase() === key.toLocaleLowerCase()
+      );
+
+      if (cmd) {
+        const shape = board.getActualShape();
+
+        switch (cmd[0]) {
+          case "RIGHT":
+            shape.goRight();
+            break;
+          case "LEFT":
+            shape.goLeft();
+            break;
+          case "DOWN":
+            shape.goDown();
+            break;
+          case "ROTATE":
+            shape.rotate();
+            break;
+        }
+
+        this.gameHandler.drawBoard();
+      }
+    });
+  }
+}
+
+export default KeyHandler;
