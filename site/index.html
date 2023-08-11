@@ -10,12 +10,18 @@
   </head>
   <body>
     <h1>Tetris AI</h1>
-    <fieldset class="actions">
+    <fieldset class="col">
       <legend>AI</legend>
-      <button id="start-ai">Start</button>
-      <button id="stop-ai">Stop</button>
+      <section class="line">
+        <button id="start-ai">Start</button>
+        <button id="stop-ai">Stop</button>
+      </section>
+      <section class="line">
+        <label for="fps">FPS</label>
+        <input id="fps" type="range" min="1" max="120" value="60" />
+      </section>
     </fieldset>
-    <fieldset class="actions">
+    <fieldset class="line">
       <legend>Game</legend>
       <button id="play">Play</button>
       <button id="stop">Pause</button>
