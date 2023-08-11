@@ -1,4 +1,4 @@
 - fixe bug de décalage derniere minute enleve morceau autre shape
 - on devrait pouvoir faire un décalage encore une derniere fois comme s'il y avait un tick en plus pour check intersection après
 - on devrais perdre si on attein tout en haut (changer position bloque au départ ?)
-- rotation sur le milieu
+- commenter le code
