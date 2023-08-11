@@ -59,7 +59,7 @@ class Shape {
         }
       }
 
-      //checking we dont make conflict with other shape
+      //checking we dont make conflict with other shapes
       for (let i = 0; i < rotated.length; ++i) {
         for (let j = 0; j < rotated[i].length; ++j) {
           if (newY + i >= 0 && board[i + newY][j + newX] !== 0) return;
@@ -68,7 +68,6 @@ class Shape {
 
       this.position.y = newY;
       this.position.x = newX;
-
       this.shape = rotated;
     }
 
