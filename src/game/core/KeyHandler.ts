@@ -42,7 +42,7 @@ class KeyHandler {
         }
 
         this.gameHandler.drawGame();
-        if (board.haveLoose()) this.gameHandler.reset(false);
+        if (board.haveLoose()) this.gameHandler.loose();
       }
     });
   }

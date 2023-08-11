@@ -2,6 +2,12 @@ import colors from "../constants/colors";
 import Board from "./Board";
 import KeyHandler from "./KeyHandler";
 
+enum GameStatus {
+  LOOSE = "You loose",
+  NOT_PLAYING = "Not playing",
+  PLAYING = "Playing",
+}
+
 const GAME_OPTIONS = {
   TICK: 400,
   KEYS: {
@@ -21,6 +27,8 @@ class GameHandler {
 
   private board = new Board();
   private keyHandler: KeyHandler;
+
+  private gameStatus: GameStatus = GameStatus.NOT_PLAYING;
 
   constructor(private canvas: HTMLCanvasElement) {
     this.ctx = this.canvas.getContext("2d");
@@ -123,8 +131,12 @@ class GameHandler {
     this.ctx.font = "20px sans-serif";
     this.ctx.fillText("Score: " + this.board.getScore(), textX, 30);
 
+    /* Game status */
+    this.ctx.fillText("Game status:", textX, 60);
+    this.ctx.fillText("- " + this.gameStatus, textX, 80);
+
     /* Next Shape */
-    this.ctx.fillText("Next Shape:", textX, 60);
+    this.ctx.fillText("Next Shape:", textX, 110);
     const nextShape = this.board.getNextShape().getShape();
     for (let i = 0; i < nextShape.length; ++i) {
       for (let j = 0; j < nextShape[i].length; ++j) {
@@ -134,22 +146,31 @@ class GameHandler {
 
         //We set -1 because 0 was reserved for empty
         const color = colors[nextShape[i][j] - 1];
-        this.drawRect(j, i, color, textX, 70);
+        this.drawRect(j, i, color, textX, 120);
       }
     }
   }
 
+  loose() {
+    this.gameStatus = GameStatus.LOOSE;
+    this.drawGame();
+    this.reset(false);
+  }
+
   start() {
-    if (!this.clock)
+    if (!this.clock) {
+      this.gameStatus = GameStatus.PLAYING;
       this.clock = setInterval(() => {
         this.board.update();
         this.drawGame();
-        if (this.board.haveLoose()) this.reset(false);
+        if (this.board.haveLoose()) this.loose();
       }, GAME_OPTIONS.TICK);
+    }
   }
 
   stop() {
     clearInterval(this.clock);
+    this.gameStatus = GameStatus.NOT_PLAYING;
     this.clock = null;
   }
 
