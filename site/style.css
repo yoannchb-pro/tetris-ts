@@ -22,6 +22,8 @@ canvas {
   border-radius: 0.4rem;
   max-width: 100%;
   background-color: #eee;
+  image-rendering: optimizeQuality; /* Pour les navigateurs basés sur Chromium */
+  image-rendering: auto; /* Pour les autres navigateurs */
 }
 
 .actions {
