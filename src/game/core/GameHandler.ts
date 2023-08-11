@@ -40,6 +40,11 @@ class GameHandler {
     this.drawGame();
   }
 
+  /**
+   * Draw polygon on the block
+   * @param coordinates
+   * @param color
+   */
   drawPolygon(coordinates: { x: number; y: number }[], color: string) {
     this.ctx.fillStyle = color;
     this.ctx.beginPath();
@@ -51,6 +56,14 @@ class GameHandler {
     this.ctx.fill();
   }
 
+  /**
+   * Draw one block for a tetris shape
+   * @param x
+   * @param y
+   * @param color
+   * @param suppX
+   * @param suppY
+   */
   drawRect(x: number, y: number, color: string, suppX = 0, suppY = 0) {
     const blockSizeWidth = this.canvasWidth / 2 / this.board.getWidth();
     const blockSizeHeight = this.canvasHeight / this.board.getHeight();
@@ -101,6 +114,9 @@ class GameHandler {
     this.drawPolygon(coordinatesRight, "#00000050");
   }
 
+  /**
+   * Draw all the game and informations
+   */
   drawGame() {
     const darkColor = "#212129";
 
@@ -151,12 +167,18 @@ class GameHandler {
     }
   }
 
+  /**
+   * Method to call when we loose
+   */
   loose() {
     this.gameStatus = GameStatus.LOOSE;
     this.drawGame();
     this.reset(false);
   }
 
+  /**
+   * Start the game/clock
+   */
   start() {
     if (!this.clock) {
       this.gameStatus = GameStatus.PLAYING;
@@ -168,18 +190,29 @@ class GameHandler {
     }
   }
 
+  /**
+   * Stop the game/clock
+   */
   stop() {
     clearInterval(this.clock);
     this.gameStatus = GameStatus.NOT_PLAYING;
     this.clock = null;
   }
 
+  /**
+   * Reset the game
+   * @param withDraw
+   */
   reset(withDraw = true) {
     this.stop();
     this.board.reset();
     if (withDraw) this.drawGame();
   }
 
+  /**
+   * Check if game is playing
+   * @returns
+   */
   isRunning() {
     return !!this.clock;
   }

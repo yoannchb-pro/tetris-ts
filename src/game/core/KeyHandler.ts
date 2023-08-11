@@ -12,6 +12,9 @@ class KeyHandler {
     this.initListener();
   }
 
+  /**
+   * Append key listener to the dom
+   */
   initListener() {
     const board = this.gameHandler.getBoard();
 

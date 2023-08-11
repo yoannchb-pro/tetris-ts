@@ -15,11 +15,20 @@ class Shape {
     }
   }
 
+  /**
+   * Generate a random shape
+   * @param board
+   * @returns
+   */
   static randomShape(board: Board) {
     const rndShape = shapes[Math.floor(Math.random() * shapes.length)];
     return new Shape(board, rndShape);
   }
 
+  /**
+   * Rotate the shape in clockwise with 90 degrees
+   * @returns
+   */
   rotate() {
     const matrix = this.shape;
 
@@ -74,6 +83,10 @@ class Shape {
     this.board.update(false);
   }
 
+  /**
+   * Check if the shape can go on the left
+   * @returns
+   */
   canGoLeft() {
     const shape = this.shape;
     const position = this.position;
@@ -94,6 +107,10 @@ class Shape {
     return true;
   }
 
+  /**
+   * Check if the shape can go on the right
+   * @returns
+   */
   canGoRiht() {
     const shape = this.shape;
     const position = this.position;
@@ -114,6 +131,10 @@ class Shape {
     return true;
   }
 
+  /**
+   * Check if the shape can go down
+   * @returns
+   */
   canGoDown() {
     if (this.haveReachedBottom()) return false;
 
@@ -135,12 +156,19 @@ class Shape {
     return true;
   }
 
+  /**
+   * Make the shape go down
+   */
   goDown() {
     if (this.position.y !== this.board.getHeight() - this.shape.length)
       ++this.position.y;
     this.board.update(false);
   }
 
+  /**
+   * Make the shape go on the right
+   * @returns
+   */
   goRight() {
     if (!this.canGoRiht()) return;
 
@@ -149,6 +177,10 @@ class Shape {
     this.board.update(false);
   }
 
+  /**
+   * Make the shape go on the left
+   * @returns
+   */
   goLeft() {
     if (!this.canGoLeft()) return;
 
@@ -156,6 +188,10 @@ class Shape {
     this.board.update(false);
   }
 
+  /**
+   * Check if we have reached bottom of the board and cant go down anymore
+   * @returns
+   */
   haveReachedBottom() {
     return this.position.y === this.board.getHeight() - this.shape.length;
   }
@@ -168,6 +204,10 @@ class Shape {
     return this.position;
   }
 
+  /**
+   * Create a copy of the shape
+   * @returns
+   */
   copy() {
     return new Shape(this.board, this.shape, structuredClone(this.position));
   }

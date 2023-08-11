@@ -13,6 +13,9 @@ class Board {
     this.buildBoard();
   }
 
+  /**
+   * Build the board
+   */
   private buildBoard() {
     for (let i = 0; i < this.width * this.height; ++i) {
       if (i % this.width === 0) this.board.push([]);
@@ -20,6 +23,10 @@ class Board {
     }
   }
 
+  /**
+   * Remove the last position of the actual shape from the board
+   * @returns
+   */
   removeLastShapeDraw() {
     if (!this.backShape) return;
 
@@ -34,6 +41,9 @@ class Board {
     }
   }
 
+  /**
+   * Append the actual shape to the board
+   */
   displayShape() {
     const shape = this.actualShape.getShape();
     const position = this.actualShape.getPosition();
@@ -47,11 +57,18 @@ class Board {
     }
   }
 
+  /**
+   * Check if the game is loose
+   * @returns
+   */
   haveLoose() {
     const topLine = this.board[0];
     return topLine.some((col) => col !== 0) && !this.actualShape.canGoDown();
   }
 
+  /**
+   * Remove completed lines and set the score based on it
+   */
   removeCompletedLines() {
     for (let i = 0; i < this.board.length; ++i) {
       const line = this.board[i];
@@ -66,6 +83,10 @@ class Board {
     }
   }
 
+  /**
+   * Update the board (make shape go down, ...)
+   * @param goDown
+   */
   update(goDown = true) {
     this.removeLastShapeDraw();
 
@@ -107,8 +128,9 @@ class Board {
     return this.nextShape;
   }
 
-  setBackShape() {}
-
+  /**
+   * Reset the board
+   */
   reset() {
     this.board = [];
 
