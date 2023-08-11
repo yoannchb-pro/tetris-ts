@@ -28,19 +28,84 @@ class GameHandler {
 
     new KeyHandler(this, GAME_OPTIONS.KEYS);
 
-    this.drawBoard();
+    this.drawGame();
   }
 
-  drawBoard() {
+  drawPolygon(coordinates: { x: number; y: number }[], color: string) {
+    this.ctx.fillStyle = color;
+    this.ctx.beginPath();
+    this.ctx.moveTo(coordinates[0].x, coordinates[0].y);
+    for (let i = 1; i < coordinates.length; ++i) {
+      this.ctx.lineTo(coordinates[i].x, coordinates[i].y);
+    }
+    this.ctx.closePath();
+    this.ctx.fill();
+  }
+
+  drawRect(x: number, y: number, color: string, suppX = 0, suppY = 0) {
+    const blockSizeWidth = this.canvasWidth / 2 / this.board.getWidth();
+    const blockSizeHeight = this.canvasHeight / this.board.getHeight();
+
+    const BORDER_SIZE = 0.5;
+
+    const fx = x * blockSizeWidth + suppX;
+    const fy = y * blockSizeHeight + suppY;
+
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect(
+      fx,
+      fy,
+      blockSizeWidth - BORDER_SIZE,
+      blockSizeHeight - BORDER_SIZE
+    );
+
+    /* Fill polygons for best effect */
+    const coordinatesSupp = [
+      { x: fx, y: fy },
+      { x: fx + blockSizeWidth, y: fy },
+      { x: fx + blockSizeWidth - 2, y: fy + blockSizeHeight / 4 },
+      { x: fx + 2, y: fy + blockSizeHeight / 4 },
+    ];
+    const coordinatesInf = [
+      { x: fx, y: fy + blockSizeHeight },
+      { x: fx + blockSizeWidth, y: fy + blockSizeHeight },
+      {
+        x: fx + blockSizeWidth - 2,
+        y: fy + blockSizeHeight - blockSizeHeight / 4,
+      },
+      { x: fx + 2, y: fy + blockSizeHeight - blockSizeHeight / 4 },
+    ];
+    const coordinatesLeft = [
+      { x: fx, y: fy },
+      { x: fx + blockSizeWidth / 4, y: fy + 2 },
+      {
+        x: fx + blockSizeWidth / 4,
+        y: fy + blockSizeHeight - 2,
+      },
+      { x: fx, y: fy + blockSizeHeight },
+    ];
+    const coordinatesRight = [
+      { x: fx + blockSizeWidth, y: fy },
+      { x: fx + blockSizeWidth - blockSizeWidth / 4, y: fy + 2 },
+      {
+        x: fx + blockSizeWidth - blockSizeWidth / 4,
+        y: fy + blockSizeHeight - 2,
+      },
+      { x: fx + blockSizeWidth, y: fy + blockSizeHeight },
+    ];
+    this.drawPolygon(coordinatesSupp, "#ffffff80");
+    this.drawPolygon(coordinatesInf, "#00000080");
+    this.drawPolygon(coordinatesLeft, "#00000050");
+    this.drawPolygon(coordinatesRight, "#00000050");
+  }
+
+  drawGame() {
     const darkColor = "#212129";
 
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     this.ctx.fillStyle = darkColor;
     this.ctx.fillRect(0, 0, this.canvasWidth / 2, this.canvasHeight);
-
-    const blockSizeWidth = this.canvasWidth / 2 / this.board.getWidth();
-    const blockSizeHeight = this.canvasHeight / this.board.getHeight();
 
     const boardMatrix = this.board.getBoard();
 
@@ -52,14 +117,8 @@ class GameHandler {
         if (dontNeedDraw) continue;
 
         //We set -1 because 0 was reserved for empty
-        this.ctx.fillStyle = colors[boardMatrix[i][j] - 1];
-        this.ctx.fillRect(
-          j * blockSizeWidth,
-          i * blockSizeHeight,
-          blockSizeWidth,
-          blockSizeHeight
-        );
-        this.ctx.stroke();
+        const color = colors[boardMatrix[i][j] - 1];
+        this.drawRect(j, i, color);
       }
     }
 
@@ -80,14 +139,8 @@ class GameHandler {
         if (dontNeedDraw) continue;
 
         //We set -1 because 0 was reserved for empty
-        this.ctx.fillStyle = colors[nextShape[i][j] - 1];
-        this.ctx.fillRect(
-          j * blockSizeWidth + textX,
-          i * blockSizeHeight + 70,
-          blockSizeWidth,
-          blockSizeHeight
-        );
-        this.ctx.stroke();
+        const color = colors[nextShape[i][j] - 1];
+        this.drawRect(j, i, color, textX, 70);
       }
     }
   }
@@ -95,7 +148,7 @@ class GameHandler {
   start() {
     this.clock = setInterval(() => {
       this.board.update();
-      this.drawBoard();
+      this.drawGame();
     }, GAME_OPTIONS.TICK);
   }
 

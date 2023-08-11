@@ -40,7 +40,7 @@ class KeyHandler {
             break;
         }
 
-        this.gameHandler.drawBoard();
+        this.gameHandler.drawGame();
       }
     });
   }
