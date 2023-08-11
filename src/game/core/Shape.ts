@@ -2,6 +2,14 @@ import shapes from "../constants/shapes";
 import Board from "./Board";
 
 class Shape {
+  /**
+   * we want to be able to do a last action when the shape can't go done anymore
+   * 0 we can do anything
+   * 1 we can do anything except going down
+   * > 1 we can't do anything
+   */
+  private downTick = 0;
+
   constructor(
     private board: Board,
     private shape: number[][],
@@ -136,7 +144,10 @@ class Shape {
    * @returns
    */
   canGoDown() {
-    if (this.haveReachedBottom()) return false;
+    if (this.haveReachedBottom()) {
+      ++this.downTick;
+      return this.downTick <= 1;
+    }
 
     const shape = this.shape;
     const position = this.position;
@@ -149,9 +160,14 @@ class Shape {
           (shape[i + 1]?.[j] === 0 || shape[i + 1]?.[j] === undefined) &&
           board[i + position.y + 1]?.[j + position.x] !== 0;
 
-        if (isIntersectingDown && shape[i][j] !== 0) return false;
+        if (isIntersectingDown && shape[i][j] !== 0) {
+          ++this.downTick;
+          return this.downTick <= 1;
+        }
       }
     }
+
+    this.downTick = 0;
 
     return true;
   }
@@ -160,7 +176,10 @@ class Shape {
    * Make the shape go down
    */
   goDown() {
-    if (this.position.y !== this.board.getHeight() - this.shape.length)
+    if (
+      this.position.y !== this.board.getHeight() - this.shape.length &&
+      this.downTick === 0
+    )
       ++this.position.y;
     this.board.update(false);
   }
