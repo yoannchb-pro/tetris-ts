@@ -1,5 +1,4 @@
-import GameHandler from "../GameHandler";
-import Board from "./Board";
+import GameHandler from "./GameHandler";
 
 type Keys = {
   RIGHT: string;

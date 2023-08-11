@@ -1,10 +1,6 @@
 const shapes: number[][][] = [
   //we had useless line to make the rotation from the center of the element
-  [
-    [0, 0, 0, 0],
-    [1, 1, 1, 1],
-    [0, 0, 0, 0],
-  ],
+  [[1, 1, 1, 1]],
   [
     [2, 0, 0],
     [2, 2, 2],

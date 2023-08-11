@@ -63,7 +63,7 @@ class Board {
   update(goDown = true) {
     this.removeLastShapeDraw();
 
-    if (this.iShapeIntersecting()) {
+    if (!this.actualShape.canGoDown()) {
       this.displayShape();
       this.actualShape = this.nextShape;
       this.nextShape = Shape.randomShape(this);
@@ -76,26 +76,6 @@ class Board {
     this.displayShape();
 
     this.removeCompletedLines();
-  }
-
-  iShapeIntersecting() {
-    if (this.actualShape.haveReachedBottom()) return true;
-
-    const shape = this.actualShape.getShape();
-    const position = this.actualShape.getPosition();
-
-    for (let i = 0; i < shape.length; ++i) {
-      for (let j = 0; j < shape[i].length; ++j) {
-        if (
-          this.board[i + position.y + 1]?.[j + position.x] !== 0 &&
-          shape[i][j] !== 0 &&
-          position.y >= 0
-        )
-          return true;
-      }
-    }
-
-    return false;
   }
 
   getScore() {

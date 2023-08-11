@@ -1,1 +1,1 @@
-import "./game/GameHandler";
+import "./game";

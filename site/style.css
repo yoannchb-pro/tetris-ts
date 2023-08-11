@@ -26,6 +26,16 @@ canvas {
   image-rendering: auto; /* Pour les autres navigateurs */
 }
 
+h1 {
+  color: #212129;
+}
+
+fieldset {
+  padding: 0.5rem;
+  color: #212129;
+  border-color: #212129;
+}
+
 .actions {
   display: flex;
   gap: 1rem;

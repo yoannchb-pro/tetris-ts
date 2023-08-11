@@ -35,8 +35,71 @@ class Shape {
       rotated.push(newRow);
     }
 
+    // we set +1 because we need to go down not to stay in place
+    this.position.y += 1 - Math.floor(rotated.length / 2);
+
     this.shape = rotated;
     this.board.update(false);
+  }
+
+  canGoLeft() {
+    const shape = this.shape;
+    const position = this.position;
+    const board = this.board.getBoard();
+
+    for (let i = 0; i < shape.length; ++i) {
+      for (let j = 0; j < shape[i].length; ++j) {
+        const isIntersectingLeft =
+          position.y + i > 0 &&
+          (shape[i][j - 1] === 0 || shape[i][j - 1] === undefined) &&
+          board[i + position.y]?.[j + position.x - 1] !== 0 &&
+          position.x !== 0;
+
+        if (isIntersectingLeft && shape[i][j] !== 0) return false;
+      }
+    }
+
+    return true;
+  }
+
+  canGoRiht() {
+    const shape = this.shape;
+    const position = this.position;
+    const board = this.board.getBoard();
+
+    for (let i = 0; i < shape.length; ++i) {
+      for (let j = 0; j < shape[i].length; ++j) {
+        const isIntersectingRight =
+          position.y + i > 0 &&
+          (shape[i][j + 1] === 0 || shape[i][j + 1] === undefined) &&
+          board[i + position.y]?.[j + position.x + 1] !== 0 &&
+          position.x !== this.board.getWidth() - shape[0].length;
+
+        if (isIntersectingRight && shape[i][j] !== 0) return false;
+      }
+    }
+
+    return true;
+  }
+
+  canGoDown() {
+    if (this.haveReachedBottom()) return false;
+
+    const shape = this.shape;
+    const position = this.position;
+    const board = this.board.getBoard();
+
+    for (let i = 0; i < shape.length; ++i) {
+      for (let j = 0; j < shape[i].length; ++j) {
+        const isIntersectingDown =
+          position.y + i > 0 &&
+          board[i + position.y + 1]?.[j + position.x] !== 0;
+
+        if (isIntersectingDown && shape[i][j] !== 0) return false;
+      }
+    }
+
+    return true;
   }
 
   goDown() {
@@ -46,12 +109,16 @@ class Shape {
   }
 
   goRight() {
+    if (!this.canGoRiht()) return;
+
     if (this.position.x !== this.board.getWidth() - this.shape[0].length)
       ++this.position.x;
     this.board.update(false);
   }
 
   goLeft() {
+    if (!this.canGoLeft()) return;
+
     if (this.position.x !== 0) this.position.x--;
     this.board.update(false);
   }

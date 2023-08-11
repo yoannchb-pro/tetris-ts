@@ -1,6 +1,6 @@
-import colors from "./constants/colors";
-import Board from "./core/Board";
-import KeyHandler from "./core/KeyHandler";
+import colors from "../constants/colors";
+import Board from "./Board";
+import KeyHandler from "./KeyHandler";
 
 const GAME_OPTIONS = {
   TICK: 400,
@@ -166,17 +166,5 @@ class GameHandler {
     return this.board;
   }
 }
-
-/* Implementation to the dom */
-const canvas = document.querySelector("canvas");
-const playBtn = document.querySelector("#play");
-const stopBtn = document.querySelector("#stop");
-const resetBtn = document.querySelector("#reset");
-
-const game = new GameHandler(canvas);
-
-playBtn.addEventListener("click", () => game.start());
-stopBtn.addEventListener("click", () => game.stop());
-resetBtn.addEventListener("click", () => game.reset());
 
 export default GameHandler;
