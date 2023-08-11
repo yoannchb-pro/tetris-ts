@@ -2,9 +2,11 @@ import Shape from "./Shape";
 
 class Board {
   private board: number[][] = [];
+
+  private score = 0;
+
   private actualShape = Shape.randomShape(this);
   private nextShape = Shape.randomShape(this);
-
   private backShape: Shape;
 
   constructor(private width = 12, private height = 24) {
@@ -13,7 +15,7 @@ class Board {
 
   private buildBoard() {
     for (let i = 0; i < this.width * this.height; ++i) {
-      if (i % this.height === 0) this.board.push([]);
+      if (i % this.width === 0) this.board.push([]);
       this.board[this.board.length - 1].push(0);
     }
   }
@@ -27,7 +29,7 @@ class Board {
     for (let i = 0; i < shape.length; ++i) {
       for (let j = 0; j < shape[i].length; ++j) {
         if (position.y + i < 0) continue;
-        if (shape[i][j] !== 0) this.board[i + position.x][j + position.y] = 0;
+        if (shape[i][j] !== 0) this.board[i + position.y][j + position.x] = 0;
       }
     }
   }
@@ -40,7 +42,7 @@ class Board {
       for (let j = 0; j < shape[i].length; ++j) {
         if (position.y + i < 0) continue;
         if (shape[i][j] !== 0)
-          this.board[i + position.x][j + position.y] = shape[i][j];
+          this.board[i + position.y][j + position.x] = shape[i][j];
       }
     }
   }
@@ -52,6 +54,7 @@ class Board {
 
       if (!lineCompleted) continue;
 
+      this.score += 10;
       this.board.splice(i, 1);
       this.board.unshift(Array(this.width).fill(0));
     }
@@ -84,7 +87,7 @@ class Board {
     for (let i = 0; i < shape.length; ++i) {
       for (let j = 0; j < shape[i].length; ++j) {
         if (
-          this.board[i + position.x][j + position.y + 1] !== 0 &&
+          this.board[i + position.y + 1]?.[j + position.x] !== 0 &&
           shape[i][j] !== 0 &&
           position.y >= 0
         )
@@ -93,6 +96,10 @@ class Board {
     }
 
     return false;
+  }
+
+  getScore() {
+    return this.score;
   }
 
   getBoard() {
@@ -109,6 +116,10 @@ class Board {
 
   getActualShape() {
     return this.actualShape;
+  }
+
+  getNextShape() {
+    return this.nextShape;
   }
 
   setBackShape() {}
