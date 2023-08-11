@@ -17,6 +17,8 @@ class KeyHandler {
     const board = this.gameHandler.getBoard();
 
     document.addEventListener("keydown", (event) => {
+      if (!this.gameHandler.isRunning()) return;
+
       const key = event.key;
       const cmd = Object.entries(this.keys).find(
         (arr) => arr[1].toLocaleLowerCase() === key.toLocaleLowerCase()

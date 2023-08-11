@@ -20,13 +20,14 @@ class GameHandler {
   private canvasHeight: number;
 
   private board = new Board();
+  private keyHandler: KeyHandler;
 
   constructor(private canvas: HTMLCanvasElement) {
     this.ctx = this.canvas.getContext("2d");
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
 
-    new KeyHandler(this, GAME_OPTIONS.KEYS);
+    this.keyHandler = new KeyHandler(this, GAME_OPTIONS.KEYS);
 
     this.drawGame();
   }
@@ -46,18 +47,11 @@ class GameHandler {
     const blockSizeWidth = this.canvasWidth / 2 / this.board.getWidth();
     const blockSizeHeight = this.canvasHeight / this.board.getHeight();
 
-    const BORDER_SIZE = 0.5;
-
     const fx = x * blockSizeWidth + suppX;
     const fy = y * blockSizeHeight + suppY;
 
     this.ctx.fillStyle = color;
-    this.ctx.fillRect(
-      fx,
-      fy,
-      blockSizeWidth - BORDER_SIZE,
-      blockSizeHeight - BORDER_SIZE
-    );
+    this.ctx.fillRect(fx, fy, blockSizeWidth, blockSizeHeight);
 
     /* Fill polygons for best effect */
     const coordinatesSupp = [
@@ -146,14 +140,26 @@ class GameHandler {
   }
 
   start() {
-    this.clock = setInterval(() => {
-      this.board.update();
-      this.drawGame();
-    }, GAME_OPTIONS.TICK);
+    if (!this.clock)
+      this.clock = setInterval(() => {
+        this.board.update();
+        this.drawGame();
+      }, GAME_OPTIONS.TICK);
   }
 
   stop() {
     clearInterval(this.clock);
+    this.clock = null;
+  }
+
+  reset() {
+    this.stop();
+    this.board.reset();
+    this.drawGame();
+  }
+
+  isRunning() {
+    return !!this.clock;
   }
 
   getBoard() {
@@ -161,8 +167,16 @@ class GameHandler {
   }
 }
 
+/* Implementation to the dom */
 const canvas = document.querySelector("canvas");
+const playBtn = document.querySelector("#play");
+const stopBtn = document.querySelector("#stop");
+const resetBtn = document.querySelector("#reset");
+
 const game = new GameHandler(canvas);
-game.start();
+
+playBtn.addEventListener("click", () => game.start());
+stopBtn.addEventListener("click", () => game.stop());
+resetBtn.addEventListener("click", () => game.reset());
 
 export default GameHandler;

@@ -126,6 +126,13 @@ class Board {
 
   reset() {
     this.board = [];
+
+    this.actualShape = Shape.randomShape(this);
+    this.nextShape = Shape.randomShape(this);
+    this.backShape = null;
+
+    this.score = 0;
+
     this.buildBoard();
   }
 }
