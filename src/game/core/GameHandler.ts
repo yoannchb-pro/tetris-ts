@@ -144,6 +144,7 @@ class GameHandler {
       this.clock = setInterval(() => {
         this.board.update();
         this.drawGame();
+        if (this.board.haveLoose()) this.reset(false);
       }, GAME_OPTIONS.TICK);
   }
 
@@ -152,10 +153,10 @@ class GameHandler {
     this.clock = null;
   }
 
-  reset() {
+  reset(withDraw = true) {
     this.stop();
     this.board.reset();
-    this.drawGame();
+    if (withDraw) this.drawGame();
   }
 
   isRunning() {

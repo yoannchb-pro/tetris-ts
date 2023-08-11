@@ -47,6 +47,11 @@ class Board {
     }
   }
 
+  haveLoose() {
+    const topLine = this.board[0];
+    return topLine.some((col) => col !== 0) && !this.actualShape.canGoDown();
+  }
+
   removeCompletedLines() {
     for (let i = 0; i < this.board.length; ++i) {
       const line = this.board[i];

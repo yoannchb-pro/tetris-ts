@@ -9,7 +9,7 @@ class Shape {
   ) {
     if (!this.position) {
       this.position = {
-        x: 0,
+        x: Math.floor(this.board.getWidth() / 2 - this.shape[0].length / 2),
         y: -this.shape.length,
       };
     }
@@ -50,7 +50,7 @@ class Shape {
     for (let i = 0; i < shape.length; ++i) {
       for (let j = 0; j < shape[i].length; ++j) {
         const isIntersectingLeft =
-          position.y + i > 0 &&
+          position.y + i >= 0 &&
           (shape[i][j - 1] === 0 || shape[i][j - 1] === undefined) &&
           board[i + position.y]?.[j + position.x - 1] !== 0 &&
           position.x !== 0;
@@ -70,7 +70,7 @@ class Shape {
     for (let i = 0; i < shape.length; ++i) {
       for (let j = 0; j < shape[i].length; ++j) {
         const isIntersectingRight =
-          position.y + i > 0 &&
+          position.y + i >= 0 &&
           (shape[i][j + 1] === 0 || shape[i][j + 1] === undefined) &&
           board[i + position.y]?.[j + position.x + 1] !== 0 &&
           position.x !== this.board.getWidth() - shape[0].length;
@@ -92,7 +92,8 @@ class Shape {
     for (let i = 0; i < shape.length; ++i) {
       for (let j = 0; j < shape[i].length; ++j) {
         const isIntersectingDown =
-          position.y + i > 0 &&
+          position.y + i + 1 >= 0 &&
+          (shape[i + 1]?.[j] === 0 || shape[i + 1]?.[j] === undefined) &&
           board[i + position.y + 1]?.[j + position.x] !== 0;
 
         if (isIntersectingDown && shape[i][j] !== 0) return false;
