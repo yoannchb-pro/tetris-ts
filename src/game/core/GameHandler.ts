@@ -11,10 +11,10 @@ enum GameStatus {
 const GAME_OPTIONS = {
   TICK: 400,
   KEYS: {
-    RIGHT: "D",
-    DOWN: "S",
-    LEFT: "Q",
-    ROTATE: "R",
+    RIGHT: "ArrowRight",
+    DOWN: "ArrowDown",
+    LEFT: "ArrowLeft",
+    ROTATE: "ArrowUp",
   },
 };
 
