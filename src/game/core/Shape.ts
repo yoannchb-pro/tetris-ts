@@ -35,10 +35,43 @@ class Shape {
       rotated.push(newRow);
     }
 
-    // we set +1 because we need to go down not to stay in place
-    this.position.y += 1 - Math.floor(rotated.length / 2);
+    const newY =
+      this.position.y +
+      Math.floor(this.shape.length / 2) -
+      Math.floor(rotated.length / 2);
+    const newX =
+      this.position.x +
+      Math.floor(this.shape[0].length / 2) -
+      Math.floor(rotated[0].length / 2);
 
-    this.shape = rotated;
+    const canRotateX =
+      newX + rotated[0].length <= this.board.getWidth() && newX >= 0;
+    const canRotateY = newY + rotated.length <= this.board.getHeight();
+
+    if (canRotateX && canRotateY) {
+      const board = structuredClone(this.board.getBoard());
+
+      //We simulate the removing of the original shape
+      for (let i = 0; i < this.shape.length; ++i) {
+        for (let j = 0; j < this.shape[i].length; ++j) {
+          if (this.position.y + i >= 0)
+            board[i + this.position.y][j + this.position.x] = 0;
+        }
+      }
+
+      //checking we dont make conflict with other shape
+      for (let i = 0; i < rotated.length; ++i) {
+        for (let j = 0; j < rotated[i].length; ++j) {
+          if (newY + i >= 0 && board[i + newY][j + newX] !== 0) return;
+        }
+      }
+
+      this.position.y = newY;
+      this.position.x = newX;
+
+      this.shape = rotated;
+    }
+
     this.board.update(false);
   }
 

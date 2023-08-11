@@ -55,6 +55,7 @@ class Board {
   removeCompletedLines() {
     for (let i = 0; i < this.board.length; ++i) {
       const line = this.board[i];
+
       const lineCompleted = line.every((col) => col !== 0);
 
       if (!lineCompleted) continue;
@@ -70,6 +71,7 @@ class Board {
 
     if (!this.actualShape.canGoDown()) {
       this.displayShape();
+      setTimeout(() => this.removeCompletedLines(), 0);
       this.actualShape = this.nextShape;
       this.nextShape = Shape.randomShape(this);
     }
@@ -79,8 +81,6 @@ class Board {
     if (goDown) this.actualShape.goDown();
 
     this.displayShape();
-
-    this.removeCompletedLines();
   }
 
   getScore() {
