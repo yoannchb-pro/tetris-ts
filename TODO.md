@@ -8,4 +8,5 @@
 
 # Priority 3
 
+- range bar fps ai
 - refactoring de fin
