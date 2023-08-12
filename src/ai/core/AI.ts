@@ -8,10 +8,28 @@ class AI {
 
   main() {
     const boardClass = this.gameHandler.getBoard();
-    const shapeClass = boardClass.getActualShape();
+    const actualShapeClass = boardClass.getActualShape();
+    const nextShapeClass = boardClass.getNextShape();
 
-    shapeClass.goDown();
+    const board = boardClass.getBoard();
+    const actualShape = actualShapeClass.getShape();
+    const nextShape = nextShapeClass.getShape();
 
+    const position = actualShapeClass.getPosition();
+
+    for (let i = 0; i < board.length; ++i) {
+      const isLineEmpty = board[i].every((col) => col === 0);
+      if (isLineEmpty) continue;
+
+      for (let j = 0; j < board[i].length; ++j) {
+        //for each rotation
+        for (let r = 0; r < 3; ++r) {
+          //TODO
+        }
+      }
+    }
+
+    /* Refreshing and game status handling */
     if (boardClass.haveLoose()) {
       this.stop();
       this.gameHandler.loose();

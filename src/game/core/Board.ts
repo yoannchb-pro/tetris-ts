@@ -153,6 +153,30 @@ class Board {
     return this.nextShape;
   }
 
+  getBackShape() {
+    return this.backShape;
+  }
+
+  setActualShape(shape: Shape) {
+    this.actualShape = shape;
+  }
+
+  setNextShape(shape: Shape) {
+    this.nextShape = shape;
+  }
+
+  setBackShape(shape: Shape) {
+    this.backShape = shape;
+  }
+
+  setBoard(board: number[][]) {
+    this.board = board;
+  }
+
+  setScore(score: number) {
+    this.score = score;
+  }
+
   /**
    * Reset the board
    */
@@ -166,6 +190,20 @@ class Board {
     this.score = 0;
 
     this.buildBoard();
+  }
+
+  /**
+   * Create a deep copy of the board
+   * @returns
+   */
+  copy() {
+    const copy = new Board(this.width, this.height);
+    copy.setActualShape(this.actualShape.copy());
+    copy.setNextShape(this.nextShape.copy());
+    copy.setBackShape(this.backShape.copy());
+    copy.setBoard(structuredClone(this.board));
+    copy.setScore(this.score);
+    return copy;
   }
 }
 
