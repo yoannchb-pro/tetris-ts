@@ -197,7 +197,7 @@ class GameHandler {
     clearInterval(this.clock);
     this.gameStatus = GameStatus.NOT_PLAYING;
     this.clock = null;
-    this.drawGame();
+    // this.drawGame();
   }
 
   /**
