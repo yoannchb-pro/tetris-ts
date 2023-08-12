@@ -57,6 +57,26 @@ class GameHandler {
   }
 
   /**
+   * Draw border for the grid
+   * @param x
+   * @param y
+   */
+  drawBorder(x: number, y: number) {
+    const blockSizeWidth = this.canvasWidth / 2 / this.board.getWidth();
+    const blockSizeHeight = this.canvasHeight / this.board.getHeight();
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "#ffffff10";
+    this.ctx.rect(
+      x * blockSizeWidth,
+      y * blockSizeHeight,
+      blockSizeWidth,
+      blockSizeHeight
+    );
+    this.ctx.stroke();
+  }
+
+  /**
    * Draw one block for a tetris shape
    * @param x
    * @param y
@@ -130,10 +150,12 @@ class GameHandler {
     /* Drawing main board */
     for (let i = 0; i < boardMatrix.length; ++i) {
       for (let j = 0; j < boardMatrix[i].length; ++j) {
-        const dontNeedDraw = boardMatrix[i][j] === 0;
+        const isBorderGrid = boardMatrix[i][j] === 0;
 
-        if (dontNeedDraw) continue;
-
+        if (isBorderGrid) {
+          this.drawBorder(j, i);
+          continue;
+        }
         //We set -1 because 0 was reserved for empty
         const color = colors[boardMatrix[i][j] - 1];
         this.drawRect(j, i, color);
