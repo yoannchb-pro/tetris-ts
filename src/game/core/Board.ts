@@ -92,7 +92,7 @@ class Board {
 
     if (!this.actualShape.canGoDown()) {
       this.displayShape();
-      setTimeout(() => this.removeCompletedLines(), 0);
+      window.requestAnimationFrame(() => this.removeCompletedLines());
       this.actualShape = this.nextShape;
       this.nextShape = Shape.randomShape(this);
     }
