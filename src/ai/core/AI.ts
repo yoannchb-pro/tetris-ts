@@ -6,12 +6,20 @@ class AI {
 
   constructor(private gameHandler: GameHandler) {}
 
-  main() {}
+  main() {
+    const boardClass = this.gameHandler.getBoard();
+    const shapeClass = boardClass.getActualShape();
+
+    shapeClass.goDown();
+
+    this.gameHandler.drawGame();
+    this.clock = setTimeout(() => this.main(), 1000 / this.fps);
+  }
 
   start() {
-    if (!this.clock) {
-      this.clock = setTimeout(() => this.main(), 1000 / this.fps);
-    }
+    //we stop the gameHandler to ensure we can't use key and the game dont refresh each GAME TICK
+    this.gameHandler.stop();
+    this.main();
   }
 
   stop() {

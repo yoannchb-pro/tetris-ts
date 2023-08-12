@@ -144,7 +144,7 @@ class GameHandler {
 
     /* Score */
     this.ctx.fillStyle = darkColor;
-    this.ctx.font = "20px sans-serif";
+    this.ctx.font = "18px Arial, sans-serif";
     this.ctx.fillText("Score: " + this.board.getScore(), textX, 30);
 
     /* Game status */

@@ -67,9 +67,31 @@ class Board {
   }
 
   /**
+   * Get the score from the completed lines as the same moment
+   * @param completedLines
+   * @returns
+   */
+  getScoreFromCompletedLine(completedLines: number) {
+    switch (completedLines) {
+      case 0:
+        return 0;
+      case 1:
+        return 40;
+      case 2:
+        return 100;
+      case 3:
+        return 300;
+      default:
+        return 1200;
+    }
+  }
+
+  /**
    * Remove completed lines and set the score based on it
    */
   removeCompletedLines() {
+    let completedLines = 0;
+
     for (let i = 0; i < this.board.length; ++i) {
       const line = this.board[i];
 
@@ -77,10 +99,12 @@ class Board {
 
       if (!lineCompleted) continue;
 
-      this.score += 10;
+      ++completedLines;
       this.board.splice(i, 1);
       this.board.unshift(Array(this.width).fill(0));
     }
+
+    this.score += this.getScoreFromCompletedLine(completedLines);
   }
 
   /**
@@ -91,8 +115,9 @@ class Board {
     this.removeLastShapeDraw();
 
     if (!this.actualShape.canGoDown()) {
+      this.score += this.actualShape.getShape().length + 1; //We had the numbers of rows + 1 to the score
       this.displayShape();
-      window.requestAnimationFrame(() => this.removeCompletedLines());
+      this.removeCompletedLines();
       this.actualShape = this.nextShape;
       this.nextShape = Shape.randomShape(this);
     }
