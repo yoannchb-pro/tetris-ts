@@ -14,8 +14,9 @@ class AI {
     const board = boardClass.getBoard();
     const actualShape = actualShapeClass.getShape();
     const nextShape = nextShapeClass.getShape();
-
     const position = actualShapeClass.getPosition();
+
+    const boardCopy = boardClass.copy();
 
     for (let i = 0; i < board.length; ++i) {
       const isLineEmpty = board[i].every((col) => col === 0);
