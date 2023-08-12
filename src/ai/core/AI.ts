@@ -1,7 +1,7 @@
 import GameHandler from "../../game/core/GameHandler";
 
 class AI {
-  private fps = 60;
+  private fps = 10;
   private clock: NodeJS.Timeout;
 
   constructor(private gameHandler: GameHandler) {}
