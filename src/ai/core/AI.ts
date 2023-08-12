@@ -12,8 +12,13 @@ class AI {
 
     shapeClass.goDown();
 
-    this.gameHandler.drawGame();
-    this.clock = setTimeout(() => this.main(), 1000 / this.fps);
+    if (boardClass.haveLoose()) {
+      this.stop();
+      this.gameHandler.loose();
+    } else {
+      this.gameHandler.drawGame();
+      this.clock = setTimeout(() => this.main(), 1000 / this.fps);
+    }
   }
 
   start() {
