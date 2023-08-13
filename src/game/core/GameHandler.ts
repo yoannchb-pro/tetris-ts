@@ -98,33 +98,42 @@ class GameHandler {
     const coordinatesSupp = [
       { x: fx, y: fy },
       { x: fx + blockSizeWidth, y: fy },
-      { x: fx + blockSizeWidth - 2, y: fy + blockSizeHeight / 4 },
-      { x: fx + 2, y: fy + blockSizeHeight / 4 },
+      {
+        x: fx + blockSizeWidth - blockSizeHeight / 4,
+        y: fy + blockSizeHeight / 4,
+      },
+      { x: fx + blockSizeHeight / 4, y: fy + blockSizeHeight / 4 },
     ];
     const coordinatesInf = [
       { x: fx, y: fy + blockSizeHeight },
       { x: fx + blockSizeWidth, y: fy + blockSizeHeight },
       {
-        x: fx + blockSizeWidth - 2,
+        x: fx + blockSizeWidth - blockSizeHeight / 4,
         y: fy + blockSizeHeight - blockSizeHeight / 4,
       },
-      { x: fx + 2, y: fy + blockSizeHeight - blockSizeHeight / 4 },
+      {
+        x: fx + blockSizeHeight / 4,
+        y: fy + blockSizeHeight - blockSizeHeight / 4,
+      },
     ];
     const coordinatesLeft = [
       { x: fx, y: fy },
-      { x: fx + blockSizeWidth / 4, y: fy + 2 },
+      { x: fx + blockSizeWidth / 4, y: fy + blockSizeWidth / 4 },
       {
         x: fx + blockSizeWidth / 4,
-        y: fy + blockSizeHeight - 2,
+        y: fy + blockSizeHeight - blockSizeWidth / 4,
       },
       { x: fx, y: fy + blockSizeHeight },
     ];
     const coordinatesRight = [
       { x: fx + blockSizeWidth, y: fy },
-      { x: fx + blockSizeWidth - blockSizeWidth / 4, y: fy + 2 },
       {
         x: fx + blockSizeWidth - blockSizeWidth / 4,
-        y: fy + blockSizeHeight - 2,
+        y: fy + blockSizeWidth / 4,
+      },
+      {
+        x: fx + blockSizeWidth - blockSizeWidth / 4,
+        y: fy + blockSizeHeight - blockSizeWidth / 4,
       },
       { x: fx + blockSizeWidth, y: fy + blockSizeHeight },
     ];
@@ -166,15 +175,15 @@ class GameHandler {
 
     /* Score */
     this.ctx.fillStyle = darkColor;
-    this.ctx.font = "18px Arial, sans-serif";
-    this.ctx.fillText("Score: " + this.board.getScore(), textX, 30);
+    this.ctx.font = "20px Arial, sans-serif";
+    this.ctx.fillText("Score: " + this.board.getScore(), textX, 35);
 
     /* Game status */
-    this.ctx.fillText("Game status:", textX, 60);
-    this.ctx.fillText("- " + this.gameStatus, textX, 80);
+    this.ctx.fillText("Game status:", textX, 65);
+    this.ctx.fillText("> " + this.gameStatus, textX, 85);
 
     /* Next Shape */
-    this.ctx.fillText("Next Shape:", textX, 110);
+    this.ctx.fillText("Next Shape:", textX, 115);
     const nextShape = this.board.getNextShape().getShape();
     for (let i = 0; i < nextShape.length; ++i) {
       for (let j = 0; j < nextShape[i].length; ++j) {
@@ -184,7 +193,7 @@ class GameHandler {
 
         //We set -1 because 0 was reserved for empty
         const color = colors[nextShape[i][j] - 1];
-        this.drawRect(j, i, color, textX, 120);
+        this.drawRect(j, i, color, textX, 125);
       }
     }
   }

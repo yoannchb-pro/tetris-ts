@@ -9,24 +9,28 @@
     <script defer src="../dist/index.js"></script>
   </head>
   <body>
-    <h1>Tetris AI</h1>
-    <fieldset class="col">
-      <legend>AI</legend>
-      <section class="line">
-        <button id="start-ai">Start</button>
-        <button id="stop-ai">Stop</button>
-      </section>
-      <section class="line">
-        <label for="fps">FPS</label>
-        <input id="fps" type="range" min="1" max="120" value="10" />
-      </section>
-    </fieldset>
-    <fieldset class="line">
-      <legend>Game</legend>
-      <button id="play">Play</button>
-      <button id="pause">Pause</button>
-      <button id="reset">Reset</button>
-    </fieldset>
-    <canvas id="game" width="300" height="300"></canvas>
+    <section class="col center">
+      <h1>Tetris AI</h1>
+      <fieldset class="col">
+        <legend>AI</legend>
+        <section class="line">
+          <button id="start-ai">Start</button>
+          <button id="stop-ai">Stop</button>
+        </section>
+        <section class="line">
+          <label for="fps">FPS</label>
+          <input id="fps" type="range" min="1" max="120" value="10" />
+        </section>
+      </fieldset>
+      <fieldset class="line">
+        <legend>Game</legend>
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="reset">Reset</button>
+      </fieldset>
+    </section>
+    <section class="col center">
+      <canvas id="game" width="500" height="500"></canvas>
+    </section>
   </body>
 </html>
