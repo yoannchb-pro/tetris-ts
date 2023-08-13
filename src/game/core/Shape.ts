@@ -66,6 +66,8 @@ class Shape {
     const canRotateY = newY + rotated.length <= this.board.getHeight();
 
     if (canRotateX && canRotateY) {
+      //TODO (Optimisation): Make the rotation better without that much loop
+      //Run well so not that much a big priority
       const board = structuredClone(this.board.getBoard());
 
       //We simulate the removing of the original shape
