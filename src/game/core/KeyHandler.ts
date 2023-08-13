@@ -9,13 +9,13 @@ type Keys = {
 
 class KeyHandler {
   constructor(private gameHandler: GameHandler, private keys: Keys) {
-    this.initListener();
+    this.initKeyListener();
   }
 
   /**
    * Append key listener to the dom
    */
-  initListener() {
+  initKeyListener() {
     const board = this.gameHandler.getBoard();
 
     document.addEventListener("keydown", (event) => {
