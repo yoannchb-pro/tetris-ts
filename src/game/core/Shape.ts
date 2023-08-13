@@ -3,7 +3,7 @@ import Board from "./Board";
 
 class Shape {
   /**
-   * we want to be able to do a last action when the shape can't go done anymore
+   * we want to be able to do a last action when the shape can't go down anymore
    * 0 we can do anything
    * 1 we can do anything except going down
    * > 1 we can't do anything
