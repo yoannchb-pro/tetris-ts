@@ -38,6 +38,8 @@ class Shape {
    * @returns
    */
   rotate() {
+    let haveRotate = false;
+
     const matrix = this.shape;
 
     const numRows = matrix.length;
@@ -81,9 +83,12 @@ class Shape {
       //checking we dont make conflict with other shapes
       for (let i = 0; i < rotated.length; ++i) {
         for (let j = 0; j < rotated[i].length; ++j) {
-          if (newY + i >= 0 && board[i + newY][j + newX] !== 0) return;
+          if (newY + i >= 0 && board[i + newY][j + newX] !== 0)
+            return haveRotate;
         }
       }
+
+      haveRotate = true;
 
       this.position.y = newY;
       this.position.x = newX;
@@ -91,6 +96,7 @@ class Shape {
     }
 
     this.board.update(false);
+    return haveRotate;
   }
 
   /**
