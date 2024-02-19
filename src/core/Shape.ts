@@ -103,7 +103,7 @@ class Shape {
    * Check if the shape can go on the left
    * @returns
    */
-  canGoLeft() {
+  canGoLeft(checkY = true) {
     const shape = this.shape;
     const position = this.position;
     const board = this.board.getBoard();
@@ -111,14 +111,15 @@ class Shape {
     for (let i = 0; i < shape.length; ++i) {
       for (let j = 0; j < shape[i].length; ++j) {
         const isIntersectingLeft =
-          position.y + i >= 0 &&
+          (!checkY || position.y + i >= 0) &&
           (shape[i][j - 1] === 0 || shape[i][j - 1] === undefined) &&
-          board[i + position.y]?.[j + position.x - 1] !== 0 &&
-          position.x !== 0;
+          board[i + position.y]?.[j + position.x - 1] !== 0;
 
         if (isIntersectingLeft && shape[i][j] !== 0) return false;
       }
     }
+
+    // throw new Error("lol");
 
     return true;
   }
@@ -127,7 +128,7 @@ class Shape {
    * Check if the shape can go on the right
    * @returns
    */
-  canGoRiht() {
+  canGoRiht(checkY = true) {
     const shape = this.shape;
     const position = this.position;
     const board = this.board.getBoard();
@@ -135,10 +136,9 @@ class Shape {
     for (let i = 0; i < shape.length; ++i) {
       for (let j = 0; j < shape[i].length; ++j) {
         const isIntersectingRight =
-          position.y + i >= 0 &&
+          (!checkY || position.y + i >= 0) &&
           (shape[i][j + 1] === 0 || shape[i][j + 1] === undefined) &&
-          board[i + position.y]?.[j + position.x + 1] !== 0 &&
-          position.x !== this.board.getWidth() - shape[0].length;
+          board[i + position.y]?.[j + position.x + 1] !== 0;
 
         if (isIntersectingRight && shape[i][j] !== 0) return false;
       }

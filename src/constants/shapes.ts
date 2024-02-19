@@ -1,5 +1,7 @@
 type ShapeMatrix = number[][];
 
+// The number corespong to the index + 1 of the color
+// 0 is for void
 const shapes: ShapeMatrix[] = [
   [[1, 1, 1, 1]],
   [
